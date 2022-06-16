@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceHub.NetCore", "BinanceHub.NetCore\BinanceHub.NetCore.csproj", "{06D30A87-9599-4FF5-AE04-EEC7AEBF6ADD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceHub.NetCore.Tests", "BinanceHub.NetCore.Tests\BinanceHub.NetCore.Tests.csproj", "{1B7BDA12-EBCA-4536-9F02-2DA8A37B1D0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06D30A87-9599-4FF5-AE04-EEC7AEBF6ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06D30A87-9599-4FF5-AE04-EEC7AEBF6ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06D30A87-9599-4FF5-AE04-EEC7AEBF6ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06D30A87-9599-4FF5-AE04-EEC7AEBF6ADD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B7BDA12-EBCA-4536-9F02-2DA8A37B1D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B7BDA12-EBCA-4536-9F02-2DA8A37B1D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B7BDA12-EBCA-4536-9F02-2DA8A37B1D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B7BDA12-EBCA-4536-9F02-2DA8A37B1D0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2158226D-DB40-4F43-B6EE-3752FDF7F253}
+	EndGlobalSection
+EndGlobal
