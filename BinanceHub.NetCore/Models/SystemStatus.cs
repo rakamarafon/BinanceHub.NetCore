@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BinanceHub.NetCore.Models.WalletEndpointsModels
+namespace BinanceHub.NetCore.Models
 {
     public class SystemStatus
     {
