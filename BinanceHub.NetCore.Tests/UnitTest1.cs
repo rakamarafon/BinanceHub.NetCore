@@ -8,7 +8,7 @@ namespace BinanceHub.NetCore.Tests
         }
 
         [Test]
-        public void Test1()
+        public async Task Test1()
         {
             Assert.Pass();
         }
