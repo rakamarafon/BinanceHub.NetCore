@@ -1,7 +1,7 @@
-﻿using BinanceHub.NetCore.Interfaces;
+﻿using BinanceHub.NetCore.Interfaces.Endpoints;
 using BinanceHub.NetCore.Models.WalletEndpointsModels;
 
-namespace BinanceHub.NetCore.Services
+namespace BinanceHub.NetCore.Services.Endpoints
 {
     internal class WalletEndpointsService : BaseEndpointsService, IWalletEndpoints
     {
@@ -11,7 +11,7 @@ namespace BinanceHub.NetCore.Services
 
         public async Task<SystemStatus> GetSystemStatusAsync()
         {
-           return await this.GetRequestAsync<SystemStatus>("/sapi/v1/system/status");
+            return await SendPublicRequestAsync<SystemStatus>("/sapi/v1/system/status", HttpMethod.Get);
         }
     }
 }

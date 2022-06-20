@@ -1,5 +1,5 @@
-﻿using BinanceHub.NetCore.Interfaces;
-using BinanceHub.NetCore.Services;
+﻿using BinanceHub.NetCore.Interfaces.Endpoints;
+using BinanceHub.NetCore.Services.Endpoints;
 
 namespace BinanceHub.NetCore
 {

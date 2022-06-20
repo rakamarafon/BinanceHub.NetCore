@@ -1,6 +1,5 @@
 ﻿using BinanceHub.NetCore.Interfaces;
 using Newtonsoft.Json;
-using System.Text.Json;
 
 namespace BinanceHub.NetCore.Services
 {
@@ -16,24 +15,9 @@ namespace BinanceHub.NetCore.Services
             API_SECRET = api_secret;
         }
 
-        public async Task<T> GetRequestAsync<T>(string url)
+        public async Task<T> SendPublicRequestAsync<T>(string url, HttpMethod httpMethod)
         {
-            string requestURL = BASE_URL + url;
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestURL);
-            
-            HttpClient client = new HttpClient();
-
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                string contentString = await response.Content.ReadAsStringAsync();
-                return ConvertToResultType<T>(contentString);
-            }
-            else
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            return await SendRequestAsync<T>(url, httpMethod);
         }
 
         private T ConvertToResultType<T>(string source)
@@ -51,6 +35,25 @@ namespace BinanceHub.NetCore.Services
             {
 
                 throw;
+            }
+        }
+        private async Task<T> SendRequestAsync<T>(string url, HttpMethod httpMethod)
+        {
+            string requestURL = BASE_URL + url;
+            HttpRequestMessage request = new HttpRequestMessage(httpMethod, requestURL);
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string contentString = await response.Content.ReadAsStringAsync();
+                return ConvertToResultType<T>(contentString);
+            }
+            else
+            {
+                throw new HttpRequestException(response.StatusCode.ToString());
             }
         }
     }
