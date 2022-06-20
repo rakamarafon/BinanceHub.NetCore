@@ -10,8 +10,8 @@ namespace BinanceHub.NetCore.Tests
         [Test]
         public async Task Test1()
         {
-            //RestHub hub = new RestHub("","");
-            //var test = await hub.WalletAPI.GetSystemStatusAsync();
+            RestHub hub = new RestHub("", "");
+            var test = await hub.PublicAPI.GetSystemStatus();
             Assert.Pass();
         }
     }

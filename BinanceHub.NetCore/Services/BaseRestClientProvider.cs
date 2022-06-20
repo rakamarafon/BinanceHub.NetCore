@@ -1,11 +1,13 @@
 ﻿using BinanceHub.NetCore.Interfaces;
 using Newtonsoft.Json;
+using System.Text;
+using System.Web;
 
 namespace BinanceHub.NetCore.Services
 {
     public class BaseRestClientProvider : IBaseRestClientProvider
     {
-        private const string BASE_URL = "https://api1.binance.com";
+        private const string BASE_URL = "https://api.binance.com";
         private readonly string API_KEY;
         private readonly string API_SECRET;
 
@@ -15,33 +17,25 @@ namespace BinanceHub.NetCore.Services
             API_SECRET = api_secret;
         }
 
-        public async Task<T> SendPublicRequestAsync<T>(string url, HttpMethod httpMethod)
+        public async Task<T> SendPublicRequestAsync<T>(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null)
         {
-            return await SendRequestAsync<T>(url, httpMethod);
+            return await SendRequestAsync<T>(url, httpMethod, query);
         }
-
-        private T ConvertToResultType<T>(string source)
+       
+        private async Task<T> SendRequestAsync<T>(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null)
         {
-            if(source == null)
-                throw new ArgumentNullException("source");
-            try
+            string requestURL = string.Empty;                        
+            string queryString = GenerateQueryString(query);
+            
+            if(string.IsNullOrEmpty(queryString))
             {
-                var result = JsonConvert.DeserializeObject<T>(source);
-                if (result == null)
-                    throw new Exception($"cannot convert respons to {typeof(T)}");
-                return result; 
+                requestURL = BASE_URL + url;
+            } else
+            {
+                requestURL = BASE_URL + url + "?" + queryString;
             }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
-        private async Task<T> SendRequestAsync<T>(string url, HttpMethod httpMethod)
-        {
-            string requestURL = BASE_URL + url;
             HttpRequestMessage request = new HttpRequestMessage(httpMethod, requestURL);
-
             HttpClient client = new HttpClient();
 
             HttpResponseMessage response = await client.SendAsync(request);
@@ -55,6 +49,51 @@ namespace BinanceHub.NetCore.Services
             {
                 throw new HttpRequestException(response.StatusCode.ToString());
             }
+        }
+
+        private T ConvertToResultType<T>(string source)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            try
+            {
+                var result = JsonConvert.DeserializeObject<T>(source);
+                if (result == null)
+                    throw new Exception($"cannot convert respons to {typeof(T)}");
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private string GenerateQueryString(Dictionary<string, object>? query)
+        {
+            if(query == null)
+            {
+                return string.Empty;
+            }
+
+            StringBuilder builder = new StringBuilder();
+
+            foreach (var item in query)
+            {
+                var value = item.Value.ToString();
+                if(!string.IsNullOrEmpty(value))
+                {
+                   if(builder.Length > 0)
+                   {
+                    builder.Append("&");
+                   }
+
+                   builder
+                    .Append(item.Key)
+                    .Append("=")
+                    .Append(HttpUtility.UrlEncode(value));
+                }
+            }
+            return builder.ToString();
         }
     }
 }
