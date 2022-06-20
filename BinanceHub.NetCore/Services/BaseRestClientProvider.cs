@@ -50,7 +50,6 @@ namespace BinanceHub.NetCore.Services
                 throw new HttpRequestException(response.StatusCode.ToString());
             }
         }
-
         private T ConvertToResultType<T>(string source)
         {
             if (source == null)
@@ -67,7 +66,6 @@ namespace BinanceHub.NetCore.Services
                 throw;
             }
         }
-
         private string GenerateQueryString(Dictionary<string, object>? query)
         {
             if(query == null)

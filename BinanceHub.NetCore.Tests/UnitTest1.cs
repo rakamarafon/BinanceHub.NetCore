@@ -11,7 +11,7 @@ namespace BinanceHub.NetCore.Tests
         public async Task Test1()
         {
             RestHub hub = new RestHub("", "");
-            var test = await hub.PublicAPI.GetSystemStatus();
+            var test = await hub.PublicAPI.CheckServerTime();
             Assert.Pass();
         }
     }
