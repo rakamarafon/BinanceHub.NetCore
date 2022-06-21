@@ -2,6 +2,6 @@
 {
     public interface IBaseRestClientProvider
     {
-        public Task<T> SendPublicRequestAsync<T>(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null);
+        public Task<string> SendPublicRequestAsync(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null);
     }
 }

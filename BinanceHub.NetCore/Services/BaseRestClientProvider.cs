@@ -17,12 +17,12 @@ namespace BinanceHub.NetCore.Services
             API_SECRET = api_secret;
         }
 
-        public async Task<T> SendPublicRequestAsync<T>(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null)
+        public async Task<string> SendPublicRequestAsync(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null)
         {
-            return await SendRequestAsync<T>(url, httpMethod, query);
+            return await SendRequestAsync(url, httpMethod, query);
         }
        
-        private async Task<T> SendRequestAsync<T>(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null)
+        private async Task<string> SendRequestAsync(string url, HttpMethod httpMethod, Dictionary<string, object>? query = null)
         {
             string requestURL = string.Empty;                        
             string queryString = GenerateQueryString(query);
@@ -42,28 +42,11 @@ namespace BinanceHub.NetCore.Services
 
             if (response.IsSuccessStatusCode)
             {
-                string contentString = await response.Content.ReadAsStringAsync();
-                return ConvertToResultType<T>(contentString);
+                return await response.Content.ReadAsStringAsync();
             }
             else
             {
                 throw new HttpRequestException(response.StatusCode.ToString());
-            }
-        }
-        private T ConvertToResultType<T>(string source)
-        {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            try
-            {
-                var result = JsonConvert.DeserializeObject<T>(source);
-                if (result == null)
-                    throw new Exception($"cannot convert respons to {typeof(T)}");
-                return result;
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
         private string GenerateQueryString(Dictionary<string, object>? query)
